@@ -1,0 +1,2 @@
+# API Gateway dependencies
+# Geen externe dependencies nodig — gebruikt Python standard library

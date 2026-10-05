@@ -2,40 +2,81 @@
 
 Centrale API gateway voor alle fleet services.
 
+## Status
+
+**Huidige implementatie:** Minimalistische health-check gateway.
+
+De gateway is momenteel een basisimplementatie met een `/health` endpoint.
+Geplande features (rate limiting, authentication, request routing, load balancing, monitoring) zijn nog niet geïmplementeerd.
+
 ## Features
 
-- Rate limiting
-- Authentication
-- Request routing
-- Load balancing
-- Monitoring
+- [x] Health check endpoint (`/health`)
+- [ ] Rate limiting
+- [ ] Authentication
+- [ ] Request routing
+- [ ] Load balancing
+- [ ] Monitoring
 
 ## Installatie
 
 ```bash
 git clone https://github.com/itsdarklikehell/api-gateway.git
 cd api-gateway
-docker-compose up -d
+python3 gateway.py
 ```
+
+De gateway start op `0.0.0.0:8080`.
 
 ## Gebruik
 
 ```bash
+# Health check
 curl http://localhost:8080/health
-curl http://localhost:8080/api/v1/status
+# Response: {"status": "ok"}
 ```
 
-## :film_projector: Development visualization
+## Tests
 
-Bekijk de [Gource development video](https://github.com/itsdarklikehell/api-gateway/releases) voor een visuele tijdlijn van de projectgeschiedenis.
-
-Om de video lokaal te genereren:
 ```bash
-gource -1920x1080 --auto-skip-seconds 1 -o gource.ppm
-ffmpeg -y -r 60 -i gource.ppm -c:v libx264 -preset slow -crf 18 -pix_fmt yuv420p gource.mp4
+python3 -m unittest test_gateway.py -v
 ```
 
-De GitHub Actions workflow (`.github/workflows/gource.yml`) genereert de video automatisch bij elke release.
+## API
+
+| Method | Path | Beschrijving |
+|--------|------|--------------|
+| GET | `/health` | Health check — retourneert `{"status": "ok"}` met HTTP 200 |
+| GET | `*` | Onbekende paden retourneren HTTP 404 |
+
+## Architectuur
+
+```
+gateway.py
+  └── GatewayHandler (http.server.BaseHTTPRequestHandler)
+        └── do_GET()
+              ├── /health → 200 {"status": "ok"}
+              └── * → 404
+```
+
+## Development
+
+### Vereisten
+
+- Python 3.9+
+
+### Project structuur
+
+```
+api-gateway/
+├── gateway.py           # Hoofdapplicatie
+├── test_gateway.py      # Unit tests
+├── requirements.txt     # Dependencies (momenteel leeg)
+├── .github/workflows/
+│   ├── ci.yml          # CI pipeline
+│   └── gource.yml      # Gource visualisatie
+└── README.md           # Dit bestand
+```
 
 ## Licentie
 
