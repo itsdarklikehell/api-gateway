@@ -4,17 +4,20 @@ permissions:
   contents: read
   actions: read
 
-on:
+# DISABLED: Gource action outdated, consistently failing
+# on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * 0'  # weekly
+    - cr# DISABLED: Gource action outdated, consistently failing
+# on: '0 0 * * 0'  # weekly
   push:
     branches: [ master, dev ]
 
 jobs:
   gource:
     name: Generate Gource video
-    runs-on: ubuntu-latest
+    runs-# DISABLED: Gource action outdated, consistently failing
+# on: ubuntu-latest
 
     steps:
       - name: Checkout repository
