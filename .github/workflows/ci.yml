@@ -15,6 +15,11 @@ jobs:
       - name: Check syntax
         run: |
           python3 -m py_compile gateway.py
+      - name: Lint with ruff
+        run: |
+          pip install ruff
+          ruff check . --select=E9,F63,F7 --show-source --statistics
+          ruff check . --exit-zero --statistics
       - name: Run tests
         run: |
           python3 -m unittest test_gateway.py -v

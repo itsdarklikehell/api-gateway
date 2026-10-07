@@ -1,5 +1,7 @@
 # API Gateway
 
+![CI](https://img.shields.io/github/actions/workflow/status/itsdarklikehell/api-gateway/ci.yml?branch=master) ![License](https://img.shields.io/github/license/itsdarklikehell/api-gateway) ![Last Commit](https://img.shields.io/github/last-commit/itsdarklikehell/api-gateway)
+
 Centrale API gateway voor alle fleet services.
 
 ## Status
